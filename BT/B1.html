@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #center {
+            margin-top: 1;
+            display: flex;
+        }
+
+        #form {
+            width: 100%;
+            height: 100px;
+            background-image: linear-gradient(gray, black);
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body id="main">
+    <div id="center">
+        <div id="form">
+                <input type="text" name="text" id="input">
+                <button onclick="sendAPIRequest()">Tìm kiếm Giphy</button>
+        </div>
+    </div>
+
+    <script>
+        function sendAPIRequest() {
+            var userInput = document.getElementById("input").value;
+            console.log(userInput);
+
+            var giphyApiKey = "TpU4NcgGuRTAU1crvWANkmTKbb8seH2o";
+            var giphyAPIURL = `https://api.giphy.com/v1/gifs/search?q=${userInput}&rating=g&api_key=${giphyApiKey}`
+            fetch(giphyAPIURL).then(function (data) {
+                return data.json();
+            })
+            .then(function(json){
+                console.log(json.data[0].images.fixed_height.url)
+                var imgPath = json.data[0].images.fixed_height.url
+                var img = document.createElement("img")
+                img.setAttribute("src", imgPath)
+                document.body.appendChild(img)
+            })
+        }
+    </script>
+</body>
+
+</html>
